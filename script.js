@@ -36,31 +36,71 @@ function parseHTML (someString) {
     return parse.body.children;
 }
 
-let choose = prompt('1 - Сетка \n 2 - Список');
-
-let unints = document.getElementsByClassName('about-pizza');
-for(let i=0; i<20; i++) {
-    const unit = `<img src=${imagesArr[i]} alt="pizza">
+function buildUnint(un) {
+    for (let i = 0; i < 20; i++) {
+        const unit = `<img src=${imagesArr[i]} alt="pizza">
             <div>${namesArr[i]}</div>
             <div class="list-hide">${productsArr[i]}</div>
             <div class="list-hide">${caloriesArr[i]}</div>
             <div>${priceArr[i]}</div>`;
-    for (let j =0; j<5; j++)
-        unints[i].appendChild(parseHTML(unit)[j]);
+        for (let j = 0; j < 5; j++)
+            un[i].appendChild(parseHTML(unit)[j]);
+    }
 }
-if(choose == 1) {
+
+let unints = document.getElementsByClassName('about-pizza');
+buildUnint(unints);
+
+
+let choose = document.getElementById('choose');
+let chooseNum;
+choose.addEventListener('click', (event)=>{
+
+    if(chooseNum!=undefined) {
+
+        let main = document.getElementsByTagName('main')[0];
+        main.classList.add('no-display') ;
+        let filter1 = document.querySelector('main > div:nth-child(1)');
+        filter1.classList.add('no-display') ;
+        let filter2 = document.querySelector('main > div:nth-child(2)');
+        filter2.classList.add('no-display') ;
+
+        document.getElementById('filter-value-for-grid').value = null;
+
+        let radios = document.getElementsByName('filter');
+        for (let i = 0; i < radios.length; i++){
+                radios[i].checked = false;
+        }
+
+        let clear = document.querySelector('main > div:nth-child(3)');
+        clear.innerHTML = '';
+
+        for (let i = 0; i < 20; i++){
+            let divs = document.createElement('div');
+            divs.className = 'about-pizza';
+            clear.appendChild(divs);
+        }
+        buildUnint(unints);
+
+    }
+    if(event.target.id != 'grid') chooseNum = 2;
+    else chooseNum = 1;
+
+
+if(chooseNum == 1) {
+
     let noDisplayOne = document.getElementsByClassName('no-display')[0];
     let noDisplayTwo = document.getElementsByClassName('no-display')[1];
     noDisplayOne.className = '';
     noDisplayTwo.className = '';
-    let menu = document.querySelector('body div:nth-child(3)');
+    let menu = document.querySelector('main div:nth-child(3)');
     menu.className = 'menu-for-grid';
     let about = menu.children;
     for(let i = 0; i <about.length; i++) {
         about[i].className = 'about-pizza-for-grid';
     }
 
-    let divFilter = document.querySelector('body > div:nth-child(1)');
+    let divFilter = document.querySelector('main > div:nth-child(1)');
     divFilter.addEventListener("click", event => {
         if(event.target.tagName != 'BUTTON' ) return;
         let filterVal = document.getElementById('filter-value-for-grid').value;
@@ -91,12 +131,14 @@ if(choose == 1) {
         }
     }
 }
-else if (choose ==2){
+
+else if (chooseNum ==2){
+
     let noDisplayOne = document.getElementsByClassName('no-display')[0];
     let noDisplayTwo = document.getElementsByClassName('no-display')[2];
     noDisplayOne.className = '';
     noDisplayTwo.className = '';
-    let menu = document.querySelector('body div:nth-child(3)');
+    let menu = document.querySelector('main div:nth-child(3)');
     let about = menu.children;
     let hide = [];
     for(let i = 0; i <about.length; i++) {
@@ -107,8 +149,12 @@ else if (choose ==2){
     for(let i = 0; i <hide.length; i++) {
         hide[i].className = 'list-hide-for-list';
     }
-    let separ = document.querySelectorAll('.about-pizza-for-list div:nth-child(2)');
-    for (let i =0; i<separ.length; i++) {separ[i].innerHTML +=' ,&nbsp';}
+
+        let separ = document.querySelectorAll('.about-pizza-for-list div:nth-child(2)');
+        for (let i = 0; i < separ.length; i++) {
+            separ[i].innerHTML += ' ,&nbsp';
+        }
+
 
     let button = document.getElementById('run-for-list');
 
@@ -158,6 +204,4 @@ else if (choose ==2){
         }
     });
 }
-else {
-    alert('введено неверное значение!')
-}
+});

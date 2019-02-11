@@ -32,9 +32,8 @@ body {
 .about-pizza-for-list div:nth-child(2), .about-pizza-for-list div:nth-child(5){
     line-height: 50px;
 }
-
-body > div:nth-child(2) {
-    padding-left: 40%;
+body > main > div:nth-child(2){
+    text-align: center;
 }
 
 /*****************************************************************************/
@@ -45,7 +44,6 @@ body > div:nth-child(2) {
     display: block;
     margin: 0 auto;
     padding-bottom: 10px;
-
 }
 
 .about-pizza-for-grid {
@@ -66,7 +64,12 @@ body > div:nth-child(2) {
     padding: 0 20px;
 }
 
-body > div:nth-child(1) {
+main > div:nth-child(1) {
     padding: 20px 0 20px 10px;
 }
 
+
+#choose {
+    padding-top: 10px;
+    text-align: center;
+}

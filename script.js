@@ -125,7 +125,7 @@ if(chooseNum == 1) {
 
     let filterByIngredient = (ingr) => {
         for(let i = 0; i <about.length; i++) {
-            if (about[i].children[2].innerHTML.indexOf(ingr) ==-1){
+            if (about[i].children[2].innerHTML.toUpperCase().indexOf(ingr.toUpperCase()) ==-1){
                 about[i].className = 'no-display';
             }
         }
